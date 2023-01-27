@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Board {
     private static int dimension = 7;
     private static int[][] board = new int[dimension][dimension];
@@ -55,13 +57,25 @@ public class Board {
     }
     
 
-    public static void checkColor(int color) {
-        int temp_x = dimension;
-        int temp_y = 0;
-        while (temp_x < 7 || temp_y > 0) {
-            
-        }
-    }
+    public static void checkColor() {
+        ArrayList<Tile> surface = new ArrayList<Tile>();
+        surface.add(new Tile(0, 0));
+        for (int l = 1; l < dimension; l++) { // For each shell
+            for (int i = 0; i < l; i++) { //in x 
+                    ArrayList<Tile> tempSurface = new ArrayList<Tile>();
+                    for (Tile tile: surface) {
+                        if ((Math.abs(tile.getX() - i) == 1 || Math.abs(tile.getY() - j) == 1)) {
+                            if (board[tile.getX()][tile.getY()] == board[0][0]) {
+                                tempSurface.add(new Tile(i, j));
 
-    
+                            }
+                        }
+                    }
+                    for (Tile tile : tempSurface) {
+                        surface.add(tile);
+                    }
+                
+            }
+        }
+    }    
 }
