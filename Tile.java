@@ -1,7 +1,7 @@
 public class Tile {
     private int x;
     private int y;
-    private String color;
+    //private String color;
 
     public Tile() {
         int x = 0;

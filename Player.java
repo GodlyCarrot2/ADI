@@ -1,19 +1,35 @@
+import java.util.Scanner;
+
 public class Player {
     private String name;
     private int color;
+    private int factor;
+    private int position;
 
     public Player() {
         name = "";
         color = 0;
+        factor = 0;
     }
     
-    public Player(String a, int b) {
-        name = a;
-        color = b;
+    public Player(int c) {
+        name = "";
+        color = 0;
+        factor = c;
+        
     }
-
+    public int getPosition() {
+        return position;
+    }
     public String getName() {
         return name;
+    }
+
+    public void setName() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("What is your name?");
+        String a = sc.nextLine();
+        name = a;
     }
 
     public int getColor() {
@@ -22,5 +38,9 @@ public class Player {
 
     public void setColor(int b) {
         color = b;
+    }
+
+    public int getFactor() {
+        return factor;
     }
 }

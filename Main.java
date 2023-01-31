@@ -2,9 +2,11 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String args[]) {
+        Board.gameStart();
         Board.randomColors();
         Board.displayBoard();
-        Board.checkColor();
-        //Board.changeColor(3);
+        for (int x = 0; x < 6; x++) {
+        Board.gameTurn();}
+        
     }
 }
