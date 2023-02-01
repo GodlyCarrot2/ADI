@@ -12,10 +12,10 @@ public class Player {
         factor = 0;
     }
     
-    public Player(int c) {
+    public Player(int a) {
         name = "";
         color = 0;
-        factor = c;
+        factor = a;
         
     }
     public int getPosition() {

@@ -2,12 +2,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Board {
-    private static int dimension = 7;
-    private static int numColors = 3;
+    private static int dimension = 5;
+    private static int numColors = 4;
     private static int[][] board = new int[dimension][dimension];
     private static ArrayList<Player> players = new ArrayList<Player>();
     private static Player currentPlayer;
     private static int turnCounter = 0;
+    private static boolean continuePlaying = true;
     
     
     public static void gameStart() {
@@ -17,7 +18,7 @@ public class Board {
         System.out.println("Now it's the next players turn");
         player2.setName();
         players.add(player1);
-        players.add(player2);
+        players.add(player2); 
     }
 
     public static final String RESET = "\u001B[0m";
@@ -69,15 +70,22 @@ public class Board {
     }
 
     public static void checkColor(int a, int b, ArrayList<Tile> surface, int playerFactor) {
+        int position;
+        if (playerFactor == 1) {
+            position = 0;
+        }
+        else {
+            position = dimension -1;
+        }
         try {
-        if (board[a + playerFactor][b] == board[dimension - 1][dimension - 1]) {
-            surface.add(new Tile(a+playerFactor, b));
-            checkColor(a+playerFactor, b, surface, playerFactor);
-        }
-        if (board[a][b+playerFactor] == board[0][0]) {
-            surface.add(new Tile(a, b+playerFactor));
-            checkColor(b, a+playerFactor, surface, playerFactor);
-        }
+            if (board[a + playerFactor][b] == board[position][position]) {
+                surface.add(new Tile(a+playerFactor, b));
+                checkColor(a+playerFactor, b, surface, playerFactor);
+            }
+                if (board[a][b+playerFactor] == board[position][position]) {
+                surface.add(new Tile(a, b+playerFactor));
+                checkColor(b, a+playerFactor, surface, playerFactor);
+            }
         }
         catch(Exception e) {}
     }
@@ -97,16 +105,29 @@ public class Board {
     }
 
     public static void gameTurn() {
+        while (continuePlaying) {
         if (turnCounter % 2 == 0) {
             currentPlayer = players.get(0);
+            System.out.println("It is " + players.get(0).getName() + "'s turn");
         }
         else {
             currentPlayer = players.get(1);
+            System.out.println("It is " + players.get(1).getName() + "'s turn");
         }
-
-        Scanner sc = new Scanner(System.in);
-        System.out.println("What color would you like to change to?\n0 = red\n1 = black\n2 = green\n3 = yellow\n4 = blue\n5 = purple"); 
-        int color = sc.nextInt(); 
+        boolean isColor = true;
+        int color = 0;
+        while (isColor) {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("What color would you like to change to?\n0 = red\n1 = black\n2 = green\n3 = yellow\n4 = blue\n5 = purple"); 
+            color = sc.nextInt(); 
+            if (color == board[0][0]|| color == board[dimension - 1][dimension - 1]) {
+                System.out.println("That color is already taken");
+                displayBoard();
+            }
+            else {
+                isColor = false;
+            }
+        }
         
         ArrayList<Tile> surface = recursiveCheck(currentPlayer);
 
@@ -121,6 +142,44 @@ public class Board {
         }
 
         displayBoard();
+
+        if (checkBoard()) {
+            int player1Squares = 0;
+            int player2Squares = 0;
+            for (int i = 0; i < dimension; i++) {
+                for (int j = 0; j < dimension; j++) {
+                    if (board[i][j] == board[0][0]) {
+                        player1Squares++;
+                    }
+                    if (board[i][j] == board[dimension-1][dimension-1]) {
+                        player2Squares++;
+                    }
+                }
+            }
+            if (player2Squares > player1Squares) {
+                System.out.println("Congrats " + players.get(1).getName() + " you won!");
+            }
+            else {
+                System.out.println("Congrats " + players.get(0).getName() + " you won!");
+            }
+            continuePlaying = false;
+        }
+       
+
         turnCounter++;
+    }
+    }
+
+    public static boolean checkBoard() {
+        boolean gameEnd = true;
+        for (int i = 0; i < dimension; i++) {
+            for (int j = 0; j < dimension; j++) {
+                if ((board[i][j] != board[0][0]) && (board[i][j] != board[dimension -1][dimension -1])) {
+                    gameEnd = false;
+                }
+            }
+        }
+        return gameEnd;
+
     }
 }
