@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Board {
+public class Board { // Sets up variables to be used across the board
     private static int dimension = 5;
     private static int numColors = 4;
     private static int[][] board = new int[dimension][dimension];
@@ -11,7 +11,7 @@ public class Board {
     private static boolean continuePlaying = true;
     
     
-    public static void gameStart() {
+    public static void gameStart() { //Sets names and initial square colors
         Player player1 = new Player(1);
         Player player2 = new Player(-1);
         player1.setName();
@@ -21,7 +21,7 @@ public class Board {
         players.add(player2); 
     }
 
-    public static final String RESET = "\u001B[0m";
+    public static final String RESET = "\u001B[0m"; //Color Codes for the board
     public static final String BLACK = "\u001B[40m";
     public static final String RED = "\u001B[41m";
     public static final String GREEN = "\u001B[42m";
@@ -69,7 +69,7 @@ public class Board {
         System.out.println(display);
     }
 
-    public static void checkColor(int a, int b, ArrayList<Tile> surface, int playerFactor) {
+    public static void checkColor(int a, int b, ArrayList<Tile> surface, int playerFactor) { //Recursively checks if a color is within the surface of a player
         int position;
         if (playerFactor == 1) {
             position = 0;
@@ -90,7 +90,7 @@ public class Board {
         catch(Exception e) {}
     }
 
-    public static ArrayList<Tile> recursiveCheck(Player player) {
+    public static ArrayList<Tile> recursiveCheck(Player player) { //Sets up the initial checkcolor square to initiate recursion
         ArrayList<Tile> surface = new ArrayList<Tile>();
         if (currentPlayer.getFactor() == 1) {
             surface.add(new Tile(0, 0));
@@ -104,7 +104,7 @@ public class Board {
         return surface;
     }
 
-    public static void gameTurn() {
+    public static void gameTurn() { //Gameplay through a turn
         while (continuePlaying) {
         if (turnCounter % 2 == 0) {
             currentPlayer = players.get(0);
@@ -170,7 +170,7 @@ public class Board {
     }
     }
 
-    public static boolean checkBoard() {
+    public static boolean checkBoard() { //Win Condition
         boolean gameEnd = true;
         for (int i = 0; i < dimension; i++) {
             for (int j = 0; j < dimension; j++) {

@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+//Sets up Player Class
 public class Player {
     private String name;
     private int color;
