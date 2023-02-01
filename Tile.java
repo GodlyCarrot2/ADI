@@ -1,7 +1,6 @@
-public class Tile {
+public class Tile { //Attributes for board tiles
     private int x;
     private int y;
-    //private String color;
 
     public Tile() {
         int x = 0;

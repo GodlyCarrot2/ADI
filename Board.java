@@ -2,8 +2,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Board { // Sets up variables to be used across the board
-    private static int dimension = 5;
-    private static int numColors = 4;
+    private static int dimension = 9;
+    private static int numColors = 6;
     private static int[][] board = new int[dimension][dimension];
     private static ArrayList<Player> players = new ArrayList<Player>();
     private static Player currentPlayer;
